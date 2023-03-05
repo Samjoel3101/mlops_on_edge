@@ -1,0 +1,1 @@
+mlflow ui --backend-store-uri file:/home/samjoel/Projects/mlops_on_edge/data/mlflow  --default-artifact-root /home/samjoel/Projects/mlops_on_edge/data/mlflow/artifacts -h 0.0.0.0 -p 5555
