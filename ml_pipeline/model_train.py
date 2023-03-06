@@ -18,11 +18,15 @@ import seaborn as sns
 from tensorflow.keras.optimizers import Adam
 
 
-@step(experiment_tracker="custom_stack")
-def train(data_directory: str) -> None:
+BASE_DIR = "/home/samjoel/Projects/mlops_on_edge/data"
+
+
+@step(experiment_tracker="mlflow_experiment_tracker")
+def train() -> None:
+    save_dir = "train_dir"
     batch_size = 32
     img_size = 224
-    directory = data_directory
+    directory = os.path.join(BASE_DIR, save_dir)
 
     # Get data loaders
     datagen = ImageDataGenerator(rescale=1 / 255.0, zoom_range=0.2, horizontal_flip=True, validation_split=0.15)
@@ -45,7 +49,7 @@ def train(data_directory: str) -> None:
         class_mode="categorical",
     )
 
-    num_classes = np.unique(train_generator.classes)
+    num_classes = len(np.unique(train_generator.classes))
 
     img_size = 224
     base_model = VGG16(include_top=False, weights="imagenet", input_shape=(img_size, img_size, 3))
