@@ -1,6 +1,6 @@
 from zenml.steps import step, Output
 
-
+from typing import Tuple
 import mlflow
 
 import uuid
@@ -16,13 +16,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from tensorflow.keras.optimizers import Adam
+from keras.engine.functional import Functional
 
 
 BASE_DIR = "/home/samjoel/Projects/mlops_on_edge/data"
 
 
 @step(experiment_tracker="mlflow_experiment_tracker")
-def train() -> None:
+def train() -> Functional:
     save_dir = "train_dir"
     batch_size = 32
     img_size = 224
@@ -98,3 +99,5 @@ def train() -> None:
     plt.savefig("accuracy_curve.png")
 
     mlflow.log_artifact("accuracy_curve.png", "model-stats")
+
+    return model

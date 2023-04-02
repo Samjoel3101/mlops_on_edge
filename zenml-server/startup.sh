@@ -5,8 +5,7 @@ docker run -it -d -p 8080:8080 --name zenml \
 zenml connect --url http://localhost:8080
 
 # Register the MLflow experiment tracker
-zenml experiment-tracker register mlflow_experiment_tracker --flavor=mlflow \ 
-    --tracking_uri=http://localhost:5555
+zenml experiment-tracker update mlflow_experiment_tracker --flavor=mlflow --tracking_uri="http://localhost:5555/" --tracking_token="token"
 
 # Register the MLflow experiment tracker
 zenml experiment-tracker register mlflow_experiment_tracker --flavor=mlflow
