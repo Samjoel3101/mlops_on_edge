@@ -1,5 +1,5 @@
-from .data_puller import data_puller
-from .model_train import train
+from .steps.data_puller import data_puller
+from .steps.model_train import train
 
 from .train_pipeline import model_train_pipeline
 

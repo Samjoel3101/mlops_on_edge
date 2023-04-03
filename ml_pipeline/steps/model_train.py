@@ -22,7 +22,7 @@ from keras.engine.functional import Functional
 BASE_DIR = "/home/samjoel/Projects/mlops_on_edge/data"
 
 
-@step(experiment_tracker="mlflow_experiment_tracker")
+@step(experiment_tracker="mlflow_experiment_tracker", enable_cache=False)
 def train() -> Functional:
     save_dir = "train_dir"
     batch_size = 32
@@ -66,15 +66,13 @@ def train() -> Functional:
     model = Model(inputs=base_model.inputs, outputs=outputs)
 
     model.compile(optimizer=Adam(learning_rate=0.0001), loss="categorical_crossentropy", metrics=["accuracy"])
-    mlflow.tensorflow.autolog(log_models=False)
+    mlflow.tensorflow.autolog()
 
     history = model.fit(
         train_generator,
         epochs=1,
         validation_data=validation_generator,
     )
-
-    mlflow.tensorflow.log_model(model, artifact_path=f"models")
 
     # Get loss curve
     plt.figure(figsize=(20, 8))
